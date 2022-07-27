@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>关于Vue框架的学习笔记 | Tsukimi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="v-modelv-model 本质上不过是语法糖(帮我们完成:v-bind:value的数据绑定和@input&#x2F;change的事件监听) v-model 指令在表单 &lt;input&gt;、&lt;textarea&gt; 及 &lt;select&gt; 元素上创建双向数据绑定  v-model 会忽略所有表单元素的 value、checked、selected attribute 的初始值">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于Vue框架的学习笔记">
+<meta property="og:url" content="https://tsukimi628.github.io/2022/07/21/%E5%85%B3%E4%BA%8EVue%E6%A1%86%E6%9E%B6%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Tsukimi">
+<meta property="og:description" content="v-modelv-model 本质上不过是语法糖(帮我们完成:v-bind:value的数据绑定和@input&#x2F;change的事件监听) v-model 指令在表单 &lt;input&gt;、&lt;textarea&gt; 及 &lt;select&gt; 元素上创建双向数据绑定  v-model 会忽略所有表单元素的 value、checked、selected attribute 的初始值">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-07-21T03:47:16.000Z">
+<meta property="article:modified_time" content="2022-07-27T08:18:34.552Z">
+<meta property="article:author" content="tsukimi">
+<meta property="article:tag" content="Vue">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Tsukimi" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Tsukimi</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://tsukimi628.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-关于Vue框架的学习笔记" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/07/21/%E5%85%B3%E4%BA%8EVue%E6%A1%86%E6%9E%B6%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time class="dt-published" datetime="2022-07-21T03:47:16.000Z" itemprop="datePublished">2022-07-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      关于Vue框架的学习笔记
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="v-model"><a href="#v-model" class="headerlink" title="v-model"></a>v-model</h3><pre><code>v-model 本质上不过是语法糖(帮我们完成:v-bind:value的数据绑定和@input/change的事件监听)
+v-model 指令在表单 &lt;input&gt;、&lt;textarea&gt; 及 &lt;select&gt; 元素上创建双向数据绑定
+</code></pre>
+<p>v-model 会忽略所有表单元素的 value、checked、selected attribute 的初始值。始终将当前活动实例的数据作为数据来源。应该通过在组件的 data 选项中声明初始值。</p>
+<p>text 和 textarea 元素使用 value property 和 input 事件；<br>checkbox 和 radio 使用 checked property 和 change 事件；<br>select 字段将 value 作为 prop 并将 change 作为事件。</p>
+<h4 id="v-model修饰符-lazy"><a href="#v-model修饰符-lazy" class="headerlink" title="v-model修饰符-lazy"></a>v-model修饰符-lazy</h4><p>默认情况下，v-model双向绑定的是input事件，会在每次内容输入后将最新的值和绑定的属性同步，如果有lazy修饰符，那么会将绑定的事件切换为change事件，只在提交时(如回车)才触发同步</p>
+<p style="font-size:14px; color:#666;">后续更新v-model在非表单类元素中的使用</p>
+### Vue打包后不同版本解析(运行时+编译器 VS 仅运行时)
+    vue(.runtime).global(.prod).js
+    通过浏览器script标签直接使用，比如通过CDN引入的版本
+    会暴露一个全局的Vue
+
+<pre><code>vue(.runtime).esm-browser(.prod).js
+用于通过原生ES模块导入使用 浏览器&lt;script type=&quot;module&quot;&gt;引入
+
+vue(.runtime).esm-bundler.js
+用于webpack、rollup等构建工具，默认用vue.runtime.esm-bundler.js
+若需要解析模板template则需指定vue.esm-bundler.js
+
+vue.cjs(.prod).js
+服务端渲染使用
+通过require()在node.js中使用
+</code></pre>
+<h3 id="双向数据绑定的原理"><a href="#双向数据绑定的原理" class="headerlink" title="双向数据绑定的原理"></a>双向数据绑定的原理</h3><p><code>Vue是采用数据劫持结合发布-订阅模式的方式，Vue2通过Object.defineProperty()来劫持各个属性的getter、setter(vue3的数据劫持放在下一段解读)，在数据变动时发布消息给订阅者，触发相应的监听回调。</code><br><b>主要分为以下几个步骤：</b></p>
+<ol>
+<li>需要observe的数据对象进行递归遍历，包括子属性对象的属性，都加上getter、setter. getter中做依赖收集，再给某个属性赋值时就会触发setter, 就能监听到了数据变化</li>
+<li>compile解析模板指令，将模板中的变量替换成数据，然后初始化渲染页面视图，并将每个指令对应的节点绑定更新函数，添加监听数据的订阅者，一旦数据有更新，即收到通知更新视图</li>
+<li>Watcher订阅者是Observer和Complie之间通信的桥梁，负责(1)在自身实例化时往属性订阅器(dep)里面添加自己；(2)自身必须有一个update方法；(3)待属性变动dep.notice()通知时，能调用自身的update，并触发Compile中绑定的回调</li>
+<li>MVVM作为数据绑定的入口，整合Observer、Compile和Watcher三者，通过Observer来监听自己的model数据变化，通过Compile来解析编译模板指令，最终利用Watcher搭起Observer和Compile之间的通信桥梁，达到数据变化触发视图更新，视图交互变化触发数据model变更的双向绑定效果。</li>
+</ol>
+<h3 id="通过Object-defineProperty-来进行数据劫持的弊端"><a href="#通过Object-defineProperty-来进行数据劫持的弊端" class="headerlink" title="通过Object.defineProperty()来进行数据劫持的弊端"></a>通过Object.defineProperty()来进行数据劫持的弊端</h3><h3 id="nextTick原理"><a href="#nextTick原理" class="headerlink" title="$nextTick原理"></a>$nextTick原理</h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://tsukimi628.github.io/2022/07/21/%E5%85%B3%E4%BA%8EVue%E6%A1%86%E6%9E%B6%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="cl63upsd5000btow948qhhxoa" data-title="关于Vue框架的学习笔记" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/07/21/webpack%E6%90%AD%E5%BB%BA(%E5%9F%BA%E7%A1%80%E7%AF%87)/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          webpack搭建(基础篇)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/07/20/Vue3%E5%B8%A6%E6%9D%A5%E7%9A%84%E6%96%B0%E5%8F%98%E5%8C%96/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Vue3带来的新变化</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/babel/" rel="tag">babel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/h5/" rel="tag">h5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vite/" rel="tag">vite</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue3/" rel="tag">vue3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag">小程序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%84%9A%E6%89%8B%E6%9E%B6/" rel="tag">脚手架</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/" rel="tag">计算机</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/babel/" style="font-size: 10px;">babel</a> <a href="/tags/h5/" style="font-size: 10px;">h5</a> <a href="/tags/vite/" style="font-size: 10px;">vite</a> <a href="/tags/vue3/" style="font-size: 10px;">vue3</a> <a href="/tags/webpack/" style="font-size: 20px;">webpack</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 10px;">小程序</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">构建工具</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">网络</a> <a href="/tags/%E8%84%9A%E6%89%8B%E6%9E%B6/" style="font-size: 10px;">脚手架</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/" style="font-size: 10px;">计算机</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/07/27/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%8F%91%E5%B1%95%E5%8F%8A%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5%E4%B8%AD%E7%9A%84%E6%A6%82%E5%BF%B5%E6%95%B4%E7%90%86/">微信小程序发展及设计理念中的概念整理</a>
+          </li>
+        
+          <li>
+            <a href="/2022/07/24/%E4%B8%8B%E4%B8%80%E4%BB%A3%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E4%B8%8E%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7Vite/">下一代前端开发与构建工具Vite</a>
+          </li>
+        
+          <li>
+            <a href="/2022/07/24/Vue-CLI/">Vue CLI</a>
+          </li>
+        
+          <li>
+            <a href="/2022/07/22/Babel/">Babel</a>
+          </li>
+        
+          <li>
+            <a href="/2022/07/21/webpack%E6%90%AD%E5%BB%BA(%E5%9F%BA%E7%A1%80%E7%AF%87)/">webpack搭建(基础篇)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 tsukimi<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

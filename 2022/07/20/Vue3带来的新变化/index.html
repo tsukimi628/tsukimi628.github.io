@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Vue3带来的新变化 | Tsukimi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="源码层面源码通过monorepo的形式来管理源码Mono:单个主要是将许多项目的代码存储在同一个repository中目的是保持多个包互相独立，但可以有自己的功能逻辑、单元测试等，同时又属同一个仓库下方便管理，模块划分更加清晰、可维护性、可扩展性更强 源码使用typescript进行重写vue2使用flow进行类型检查vue3对ts支持更好了 性能层面vue3使用proxy进行数据劫持vue2的d">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue3带来的新变化">
+<meta property="og:url" content="https://tsukimi628.github.io/2022/07/20/Vue3%E5%B8%A6%E6%9D%A5%E7%9A%84%E6%96%B0%E5%8F%98%E5%8C%96/index.html">
+<meta property="og:site_name" content="Tsukimi">
+<meta property="og:description" content="源码层面源码通过monorepo的形式来管理源码Mono:单个主要是将许多项目的代码存储在同一个repository中目的是保持多个包互相独立，但可以有自己的功能逻辑、单元测试等，同时又属同一个仓库下方便管理，模块划分更加清晰、可维护性、可扩展性更强 源码使用typescript进行重写vue2使用flow进行类型检查vue3对ts支持更好了 性能层面vue3使用proxy进行数据劫持vue2的d">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-07-20T07:28:19.000Z">
+<meta property="article:modified_time" content="2022-07-27T02:15:56.898Z">
+<meta property="article:author" content="tsukimi">
+<meta property="article:tag" content="vue3">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Tsukimi" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Tsukimi</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://tsukimi628.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Vue3带来的新变化" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/07/20/Vue3%E5%B8%A6%E6%9D%A5%E7%9A%84%E6%96%B0%E5%8F%98%E5%8C%96/" class="article-date">
+  <time class="dt-published" datetime="2022-07-20T07:28:19.000Z" itemprop="datePublished">2022-07-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Vue3带来的新变化
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="源码层面"><a href="#源码层面" class="headerlink" title="源码层面"></a>源码层面</h2><h4 id="源码通过monorepo的形式来管理源码"><a href="#源码通过monorepo的形式来管理源码" class="headerlink" title="源码通过monorepo的形式来管理源码"></a>源码通过monorepo的形式来管理源码</h4><p>Mono:单个<br>主要是将许多项目的代码存储在同一个repository中<br>目的是保持多个包互相独立，但可以有自己的功能逻辑、单元测试等，同时又属同一个仓库下方便管理，模块划分更加清晰、可维护性、可扩展性更强</p>
+<h4 id="源码使用typescript进行重写"><a href="#源码使用typescript进行重写" class="headerlink" title="源码使用typescript进行重写"></a>源码使用typescript进行重写</h4><p>vue2使用flow进行类型检查<br>vue3对ts支持更好了</p>
+<h2 id="性能层面"><a href="#性能层面" class="headerlink" title="性能层面"></a>性能层面</h2><h4 id="vue3使用proxy进行数据劫持"><a href="#vue3使用proxy进行数据劫持" class="headerlink" title="vue3使用proxy进行数据劫持"></a>vue3使用proxy进行数据劫持</h4><pre><code>vue2的defineProperty
+</code></pre>
+<h4 id="移除部分api"><a href="#移除部分api" class="headerlink" title="移除部分api"></a>移除部分api</h4><pre><code>实例上：$on $once $off $children
+特性：filter 内联模板
+</code></pre>
+<h4 id="编译优化"><a href="#编译优化" class="headerlink" title="编译优化"></a>编译优化</h4><p>生成Block tree、slot编译优化、diff算法优化</p>
+<h2 id="新的api"><a href="#新的api" class="headerlink" title="新的api"></a>新的api</h2><h4 id="composition-api"><a href="#composition-api" class="headerlink" title="composition api"></a>composition api</h4><h4 id="hooks函数增加代码的复用性"><a href="#hooks函数增加代码的复用性" class="headerlink" title="hooks函数增加代码的复用性"></a>hooks函数增加代码的复用性</h4><pre><code>vue2中通过mixins实现共享组件逻辑，其缺陷是会存在命名冲突的问题，到了vue3，可以通过hooks函数实现抽取共享逻辑，并可以做到响应式
+</code></pre>
+<p style="color: #999;font-size:14px;">持续更新中</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://tsukimi628.github.io/2022/07/20/Vue3%E5%B8%A6%E6%9D%A5%E7%9A%84%E6%96%B0%E5%8F%98%E5%8C%96/" data-id="cl63upscy0003tow9bamh1esz" data-title="Vue3带来的新变化" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue3/" rel="tag">vue3</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/07/21/%E5%85%B3%E4%BA%8EVue%E6%A1%86%E6%9E%B6%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          关于Vue框架的学习笔记
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/07/19/requestAnimationFrame/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">requestAnimationFrame</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/babel/" rel="tag">babel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/h5/" rel="tag">h5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vite/" rel="tag">vite</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue3/" rel="tag">vue3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag">小程序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" rel="tag">构建工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%84%9A%E6%89%8B%E6%9E%B6/" rel="tag">脚手架</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/" rel="tag">计算机</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/babel/" style="font-size: 10px;">babel</a> <a href="/tags/h5/" style="font-size: 10px;">h5</a> <a href="/tags/vite/" style="font-size: 10px;">vite</a> <a href="/tags/vue3/" style="font-size: 10px;">vue3</a> <a href="/tags/webpack/" style="font-size: 20px;">webpack</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 10px;">小程序</a> <a href="/tags/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">构建工具</a> <a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">网络</a> <a href="/tags/%E8%84%9A%E6%89%8B%E6%9E%B6/" style="font-size: 10px;">脚手架</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/" style="font-size: 10px;">计算机</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/07/27/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%8F%91%E5%B1%95%E5%8F%8A%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5%E4%B8%AD%E7%9A%84%E6%A6%82%E5%BF%B5%E6%95%B4%E7%90%86/">微信小程序发展及设计理念中的概念整理</a>
+          </li>
+        
+          <li>
+            <a href="/2022/07/24/%E4%B8%8B%E4%B8%80%E4%BB%A3%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E4%B8%8E%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7Vite/">下一代前端开发与构建工具Vite</a>
+          </li>
+        
+          <li>
+            <a href="/2022/07/24/Vue-CLI/">Vue CLI</a>
+          </li>
+        
+          <li>
+            <a href="/2022/07/22/Babel/">Babel</a>
+          </li>
+        
+          <li>
+            <a href="/2022/07/21/webpack%E6%90%AD%E5%BB%BA(%E5%9F%BA%E7%A1%80%E7%AF%87)/">webpack搭建(基础篇)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 tsukimi<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
