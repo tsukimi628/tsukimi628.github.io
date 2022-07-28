@@ -1,6 +1,7 @@
 ---
 title: Babel
 date: 2022-07-22 23:02:07
+cover: 'https://cache.yisu.com/upload/information/20200720/151/49209.jpg'
 tags: 
 - babel
 - webpack

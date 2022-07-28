@@ -1,6 +1,7 @@
 ---
 title: Vue3带来的新变化
 date: 2022-07-20 15:28:19
+cover: 'https://picx.zhimg.com/v2-d9932822b90cd782a3dc85c8a288330e_1440w.jpg?source=172ae18b'
 tags: vue3
 ---
 ## 源码层面

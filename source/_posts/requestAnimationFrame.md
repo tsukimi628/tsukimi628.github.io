@@ -1,6 +1,7 @@
 ---
 title: requestAnimationFrame
 date: 2022-07-19 16:07:18
+cover: 'https://pic4.zhimg.com/v2-de9936af42274b9b2495a64a6e18600f_r.jpg'
 tags: h5
 ---
 {% blockquote %}

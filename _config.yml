@@ -8,7 +8,7 @@ subtitle: ''
 description: ''
 keywords:
 author: tsukimi
-language: en
+language: zh-CN
 timezone: ''
 
 # URL
@@ -97,7 +97,9 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+## theme: landscape
+theme: butterfly
+
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
@@ -117,12 +119,12 @@ live2d:
   model:
     use: live2d-widget-model-tororo ## 模型文件
   display:
-    position: right # 定位方向 left right top bottom
-    width: 150  # 小人宽度
-    height: 300 #  小人高度
-    hOffset: -15  # 向 偏移
-    vOffset: -15  # 像 偏移
+    position: left # 定位方向 left right top bottom
+    width: 170  # 小人宽度
+    height: 390 #  小人高度
+    hOffset: 0  # 向 偏移
+    vOffset: -60  # 像 偏移
   mobile:
     show: true  # 手机端是否显示
   react:
-    opacity: 0.9  # 模型透明度
+    opacity: 1  # 模型透明度

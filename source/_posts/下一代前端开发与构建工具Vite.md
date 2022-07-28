@@ -1,6 +1,7 @@
 ---
 title: 下一代前端开发与构建工具Vite
 date: 2022-07-24 18:55:08
+cover: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.zyiz.net%2Fupload%2F202009%2F27%2F202009271403400475.png&refer=http%3A%2F%2Fwww.zyiz.net&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1661617736&t=4f0b86a7091fa9f5c9a7b64eeb9389c7'
 tags: 
 - 构建工具
 - vite

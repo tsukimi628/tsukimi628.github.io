@@ -1,6 +1,7 @@
 ---
 title: webpack搭建(基础篇)
 date: 2022-07-21 19:04:54
+cover: 'https://static.ddhigh.com/blog/2020-03-18-032856.png'
 tags: 
 - webpack
 ---

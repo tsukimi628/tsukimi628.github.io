@@ -1,6 +1,7 @@
 ---
 title: 关于Vue框架的学习笔记
 date: 2022-07-21 11:47:16
+cover: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.pianshen.com%2Fimages%2F745%2F1a42dd3f984fbe4e92695673fc7d1889.JPEG&refer=http%3A%2F%2Fwww.pianshen.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1661616666&t=8bc9f170f7b6f8ebcfc81d258fffe386'
 tags: Vue
 ---
 
