@@ -42,5 +42,14 @@ select 字段将 value 作为 prop 并将 change 作为事件。
 4. MVVM作为数据绑定的入口，整合Observer、Compile和Watcher三者，通过Observer来监听自己的model数据变化，通过Compile来解析编译模板指令，最终利用Watcher搭起Observer和Compile之间的通信桥梁，达到数据变化触发视图更新，视图交互变化触发数据model变更的双向绑定效果。
     
 ### 通过Object.defineProperty()来进行数据劫持的弊端
-    
+    Object.defineProperty不能拦截到给对象新增属性(因为Object.defineProperty拦截的是对象的属性，需要调用VueObj.$set处理这类场景)，以及通过数组下标方式修改数组数据，Vue内部通过重写函数的方式解决了数组响应式这个问题。Vue3通过Proxy劫持对象，实现数据劫持。proxy拦截的是整个对象。
 ### $nextTick原理
+`nextTick是对Javascript执行原理-事件循环(EventLoop)的一种应用。其核心是利用了如Promise、MutationObserver、setImmediate、setTimeout的原生Javascript方法来模拟对应的微、宏任务的实现，利用Javascript的这些异步回调任务队列来实现Vue内部的异步回调队列。`
+nextTick不仅是Vue内部的异步队列的调用方法，同时也提供$nextTick api供开发者在开发中使用，对Dom更新数据时机的后续逻辑处理。引用异步更新队列机制的原因：
+1. 如果同步更新，则多次对一个或多个属性赋值，会频繁触发UI/DOM的渲染
+2. 同时由于VirtualDom的引入，每一次状态发生变化后，状态变化的信号会通知到组件，组件内部使用VirtualDom进行计算得出需要更新的具体Dom节点，后对Dom进行更新操作，每次更新状态后渲染过程需要更多的计算，避免浪费性能，所以异步渲染。Vue采用数据驱动视图思想，但在一些情况下，仍需要直接操作dom。
+
+<b>$nextTick的使用场景</b>
+1. 在数据更新后，操作某个需要因数据变化而引发结构变化的Dom
+2. 在create生命周期钩子函数中进行Dom操作
+
