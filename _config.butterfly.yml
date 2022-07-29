@@ -11,7 +11,7 @@ menu:
   关于: /about/ || fas fa-heart
 
 #background: "linear-gradient(-225deg, #3d91c7 0%, #dcf1f7 25%, #b9dee2 40%, #a3f6ff 78%, #5ca2cf 100%)"
-background: "linear-gradient(-225deg, #fff 0%, #bbd6e7 20%, #dcf1f7 35%, #b9dee2 50%, #cceff3 78%, #bcd5e5 100%)"
+background: "linear-gradient(-225deg, #fff 0%, #bbd6e7 15%, #dcf1f7 35%, #b9dee2 50%, #cceff3 78%, #bcd5e5 100%)"
 footer:
   owner:
     enable: true
