@@ -10,7 +10,7 @@ menu:
   友链: /link/ || fas fa-link
   关于: /about/ || fas fa-heart
 
-
+background: "linear-gradient(-225deg, #3d91c7 0%, #dcf1f7 25%, #b9dee2 40%, #a3f6ff 78%, #5ca2cf 100%)"
 
 footer:
   owner:
@@ -19,7 +19,11 @@ footer:
   copyright: false
 
 avatar:
-  img: /img/tsukimi.jpg
+  #img: /img/tsukimi.jpg
+  img: /img/fav.jpg
+favicon: /img/tsukimi.jpg
+
+
 
 busuanzi:
   site_uv: true
