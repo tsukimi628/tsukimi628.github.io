@@ -1,3 +1,5 @@
+preload: true
+
 menu:
   首页: / || fas fa-home
   时间轴: /archives/ || fas fa-archive
@@ -35,7 +37,10 @@ avatar:
   img: /img/fav.jpg
 favicon: /img/tsukimi.jpg
 
-
+activate-power-mode:
+  enable: true
+  colorful: true
+  shake: true
 
 busuanzi:
   site_uv: true
