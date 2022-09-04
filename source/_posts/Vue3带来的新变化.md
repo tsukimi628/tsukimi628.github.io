@@ -2,7 +2,7 @@
 title: Vue3带来的新变化
 date: 2022-07-20 15:28:19
 cover: 'https://picx.zhimg.com/v2-d9932822b90cd782a3dc85c8a288330e_1440w.jpg?source=172ae18b'
-tags: vue3
+tags: Vue3
 ---
 ### 源码层面
 #### 源码通过monorepo的形式来管理源码
@@ -11,12 +11,12 @@ Mono:单个
 目的是保持多个包互相独立，但可以有自己的功能逻辑、单元测试等，同时又属同一个仓库下方便管理，模块划分更加清晰、可维护性、可扩展性更强
 
 #### 源码使用typescript进行重写
-vue2使用flow进行类型检查
-vue3对ts支持更好了
+Vue2使用flow进行类型检查
+Vue3对ts支持更好了
 
 ### 性能层面
-#### vue3使用proxy进行数据劫持
-    vue2的defineProperty
+#### Vue3使用proxy进行数据劫持
+    Vue2的defineProperty
 #### 移除部分api
     实例上：$on $once $off $children
     特性：filter 内联模板
@@ -25,8 +25,12 @@ vue3对ts支持更好了
 
 ### 新的api
 #### composition api
+区别于按照选项来组织代码的选项式(options) api，通过组合式(composition) api，我们可以使用导入的API函数来描述组件逻辑。组合式API的核心思想是直接在函数作用域内定义响应式状态变量，并将从多个函数中得到的状态组合起来处理复杂问题。这使得组织和重用逻辑的模式变得更加强大。
+
+在单文件组件中，组合式API通常会与<code> &lt;script setup&gt; </code>搭配使用。这个<code> setup </code> attribute是一个标识，告诉Vue需要在编译时进行一些处理，让我们可以更简洁地使用组合式API。比如，<code> &lt;script setup&gt; </code> 中的导入和顶层变量/函数都能够在模板中直接使用，可以理解为模板中的表达式和<code> &lt;script setup&gt; </code>中的代码处在同一个作用域中。
+
 #### hooks函数增加代码的复用性
-    vue2中通过mixins实现共享组件逻辑，其缺陷是会存在命名冲突的问题，到了vue3，可以通过hooks函数实现抽取共享逻辑，并可以做到响应式
+Vue2中通过mixins实现共享组件逻辑，其缺陷是会存在命名冲突的问题，到了Vue3，可以通过hooks函数实现抽取共享逻辑，并可以做到响应式
 利用 hooks 结合 customRef api实现对用户输入项响应的节流操作，如下
 {% blockquote %}
 <b>customRef</b>

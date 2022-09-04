@@ -21,9 +21,9 @@ $ npx vite        // 调用项目内部安装的vite启动服务
     vite对vue提供第一优先级支持,在不使用脚手架的情况下需要如下安装：
 Vue3单文件组件支持：@vitejs/plugin-vue
 Vue3 JSX支持：@vitejs/plugin-vue-jsx
-Vue2支持：underfin/vite-plugin-vue2
+Vue2支持：underfin/vite-plugin-Vue2
 
-    以vue3为例：
+    以Vue3为例：
 ```bash
 $ npm i @vitejs/plugin-vue -D
 ```
