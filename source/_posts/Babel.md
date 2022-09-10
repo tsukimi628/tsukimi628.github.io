@@ -22,32 +22,33 @@ Babel提供了插件化的功能，一切功能都可以以插件来实现，方
 把我们编写的源代码转成浏览器识别的另一种源码，这可以把Babel看做是编译器<span style="color:#999; font-size: 14px;">(github一个js实现的编译器：https://github.com/jamiebuilds/the-super-tiny-compiler)</span>
 Babel的工作流程：解析(parse)-转换(transform)-生成(generate)
 1. 解析-接收代码并输出AST
+    - 词法分析
+        - 把字符串形式的代码转换为令牌(tokens)流(可以看做是一个扁平的语法片段数组)
 
-- 词法分析
-    - 把字符串形式的代码转换为令牌(tokens)流(可以看做是一个扁平的语法片段数组)
-{% codeblock lang:javascript %}
-    a * b
-    // 转换成tokens后如下
-    [
-        {type:{...}, value:"a", start:0, end:1, loc:{...}},
-        {type:{...}, value:"*", start:2, end:3, loc:{...}},
-        {type:{...}, value:"b", start:4, end:5, loc:{...}},
-        ...
-    ]
-{% endcodeblock %}
-- 语法分析
-    - 把令牌(tokens)流转换成AST的形式，此阶段会使用令牌中的信息把它们转换成一个抽象语法树AST的表述结构，这样更易于后续操作
-<div style="color:#555;font-size:15px;font-weight:bold;">抽象语法树AST</div>    
-    <p style="background:#efefef; color:#666; font-size: 14px;">一种描述用于静态分析的程序语法，https://astexplorer.net/查看AST</p>
-字符串形式的type字段表示节点的类型<span style="color:#888; font-size: 14px;">(如："FunctionDeclaration"，"Identifier",或"BinaryExpression")</span>。每一种类型的节点定义了一些附加属性用来进一步描述该节点类型。
-Babel还为每个节点额外生成了一些属性，用于描述该节点在原始代码中的位置，如start end
-<br>
+    {% codeblock lang:javascript %}
+        a * b
+        // 转换成tokens后如下
+        [
+            {type:{...}, value:"a", start:0, end:1, loc:{...}},
+            {type:{...}, value:"*", start:2, end:3, loc:{...}},
+            {type:{...}, value:"b", start:4, end:5, loc:{...}},
+            ...
+        ]
+    {% endcodeblock %}
+    - 语法分析
+        - 把令牌(tokens)流转换成AST的形式，此阶段会使用令牌中的信息把它们转换成一个抽象语法树AST的表述结构，这样更易于后续操作
+
+    <div style="color:#555;font-size:15px;font-weight:bold;">抽象语法树AST</div>    
+        <p style="background:#efefef; color:#666; font-size: 14px;">一种描述用于静态分析的程序语法，https://astexplorer.net/查看AST</p>
+    字符串形式的type字段表示节点的类型<span style="color:#888; font-size: 14px;">(如："FunctionDeclaration"，"Identifier",或"BinaryExpression")</span>。每一种类型的节点定义了一些附加属性用来进一步描述该节点类型。
+    Babel还为每个节点额外生成了一些属性，用于描述该节点在原始代码中的位置，如start end <br>
+
 2. 转换-接收AST并对其遍历，在此过程中对节点进行添加、更新、移除等操作。这是Babel或是其他编译器中最复杂的环节，同时插件也将在该阶段介入工作
 Babylon 是 Babel 的解析器；Babel Traverse（遍历）模块维护了整棵树的状态，并且负责替换、移除和添加节点；
 
-<br>
 3. 生成-代码生成步骤把最终(转换后)的AST转换成字符串形式的代码，同时还会创建源码映射(source maps)
 Babel Generator模块是 Babel 的代码生成器，它读取AST并将其转换为代码和源码映射（sourcemaps）
+
 ### babel在webpack中的使用
 ```bash
 $ npm i @babel/core babel-loader -D
@@ -72,7 +73,11 @@ $ npm i @babel/preset-env
 将babel配置单独抽取到一个配置文件
 // babel.config.js
 module.exports = {
-    presets: ["@babel/preset-env"]
+    // 智能预设 编译es6+语法
+    presets: ["@babel/preset-env",{
+        useBuiltIns: 'usage', //按需加载自动导入相关依赖包
+        corejs: 3
+    }]
 }
 {% endcodeblock %}
 
