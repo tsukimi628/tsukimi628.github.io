@@ -1,0 +1,165 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>鉴权机制 — JWT学习笔记 | Tsukimi</title><meta name="keywords" content="jwt"><meta name="author" content="tsukimi"><meta name="copyright" content="tsukimi"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="JWT(JSON Web Token)JWT是当前最流行的跨域身份验证解决方案 跨域身份验证的问题在使用服务端返回给客户端的session_id验证服务端存储的session(用户会话信息)的这种模式中存在的问题是在于(非单机情况下，如服务器集群或跨域的服务)，不便于服务器间共享用户会话(session)数据。如单点登录的需求: 一家公司的关联服务有网站A和网站B，目标要实现用户只要登录了其中一个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="鉴权机制 — JWT学习笔记">
+<meta property="og:url" content="https://tsukimi628.github.io/2022/10/12/%E9%89%B4%E6%9D%83%E6%9C%BA%E5%88%B6-%E2%80%94-JWT%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Tsukimi">
+<meta property="og:description" content="JWT(JSON Web Token)JWT是当前最流行的跨域身份验证解决方案 跨域身份验证的问题在使用服务端返回给客户端的session_id验证服务端存储的session(用户会话信息)的这种模式中存在的问题是在于(非单机情况下，如服务器集群或跨域的服务)，不便于服务器间共享用户会话(session)数据。如单点登录的需求: 一家公司的关联服务有网站A和网站B，目标要实现用户只要登录了其中一个">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/e7ede3920157411e86112ca7cd455679.png">
+<meta property="article:published_time" content="2022-10-12T07:33:13.000Z">
+<meta property="article:modified_time" content="2022-10-12T10:29:32.903Z">
+<meta property="article:author" content="tsukimi">
+<meta property="article:tag" content="jwt">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/e7ede3920157411e86112ca7cd455679.png"><link rel="shortcut icon" href="/img/tsukimi.jpg"><link rel="canonical" href="https://tsukimi628.github.io/2022/10/12/%E9%89%B4%E6%9D%83%E6%9C%BA%E5%88%B6-%E2%80%94-JWT%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '鉴权机制 — JWT学习笔记',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-10-12 18:29:32'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/fav.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">20</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">29</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标籤</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://img-blog.csdnimg.cn/e7ede3920157411e86112ca7cd455679.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Tsukimi</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标籤</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">鉴权机制 — JWT学习笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-10-12T07:33:13.000Z" title="发表于 2022-10-12 15:33:13">2022-10-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-10-12T10:29:32.903Z" title="更新于 2022-10-12 18:29:32">2022-10-12</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="鉴权机制 — JWT学习笔记"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="JWT-JSON-Web-Token"><a href="#JWT-JSON-Web-Token" class="headerlink" title="JWT(JSON Web Token)"></a>JWT(JSON Web Token)</h3><p>JWT是当前最流行的跨域身份验证解决方案</p>
+<h4 id="跨域身份验证的问题"><a href="#跨域身份验证的问题" class="headerlink" title="跨域身份验证的问题"></a>跨域身份验证的问题</h4><p>在使用服务端返回给客户端的session_id验证服务端存储的session(用户会话信息)的这种模式中存在的问题是在于(非单机情况下，如服务器集群或跨域的服务)，不便于服务器间共享用户会话(session)数据。<br>如<code>单点登录</code>的需求: 一家公司的关联服务有网站A和网站B，目标要实现用户只要登录了其中一个网站，再访问另一个网站时会自动登录。其中一种方案是session数据持久化，写入数据库或别的持久层。各种服务收到请求后，都向持久层请求数据。另一种方案是不把session数据存在服务器而改为存在客户端，每次请求都发回服务器，JWT就是该方案的一个代表。</p>
+<h3 id="JWT的原理"><a href="#JWT的原理" class="headerlink" title="JWT的原理"></a>JWT的原理</h3><p>服务器认证以后，生成一个包含用户身份信息的JSON对象，发回给用户，以后用户与服务端通信都传回这个JSON对象，服务器依靠该JSON对象认定用户身份，为防止用户篡改，服务器在生成该对象的时候会加上签名。服务器从之前存储状态变成无状态的，服务器如何部署完全不会影响到JWT的使用。</p>
+<h3 id="JWT的组成"><a href="#JWT的组成" class="headerlink" title="JWT的组成"></a>JWT的组成</h3><p>JWT的形如一串以<code>·</code>分隔成三个部分的字符串(Header.Payload.Signature)，三个部分分别是：</p>
+<ol>
+<li><p>Header<br>描述JWT的元数据的JSON：alg(用于签名的算法，默认是HMAC SHA256)、typ(该令牌的类型，JWT令牌统一写为’JWT’)</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;alg&quot;</span><span class="punctuation">:</span><span class="string">&quot;HS256&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;typ&quot;</span><span class="punctuation">:</span><span class="string">&quot;JWT&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>再将该JSON进行Base64编码转成字符串</p>
+</li>
+<li><p>Payload<br>存放实际需要传递的数据声明(也是JSON形式)，除了可选的JWT官方字段也可存放私有字段：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  iss(issuer)<span class="punctuation">:</span> 签发人</span><br><span class="line">  exp(expiration time)<span class="punctuation">:</span> 过期时间</span><br><span class="line">  sub(subject)<span class="punctuation">:</span> 主题</span><br><span class="line">  aud(audience)<span class="punctuation">:</span> 受众</span><br><span class="line">  nbf(Not Before)<span class="punctuation">:</span> 生效时间</span><br><span class="line">  iat(Issued At)<span class="punctuation">:</span> 签发时间</span><br><span class="line">  jti(JWT ID)<span class="punctuation">:</span> 编号</span><br><span class="line">  <span class="attr">&quot;admin&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span> <span class="comment">// 私有</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>再将该JSON进行Base64编码转成字符串</p>
+</li>
+<li><p>Signature<br>对前两部分的签名，防止被篡改<br>要实现签名，首先服务端指定一个秘钥secretKey(仅服务端知晓),然后使用Header里指定的算法按照以下公式生成签名：<br><code>Signature = HMACSHA256(base64Url(header)+&#39;.&#39;+base64Url(payload),secretKey)</code></p>
+</li>
+</ol>
+<p>最后，将Header、Payload、Signature三部分以“.”分隔拼成一个字符串的形式返回给客户端。</p>
+<h3 id="客户端使用JWT"><a href="#客户端使用JWT" class="headerlink" title="客户端使用JWT"></a>客户端使用JWT</h3><p>前端接到token后，一般通过localStorage进行缓存。需要鉴权的请求都要携带这个token.为支持跨域，将token放在HTTP请求的头信息Authorization字段中，以axios请求封装使用为例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">axios.<span class="property">interceptors</span>.<span class="property">request</span>.<span class="title function_">use</span>(<span class="function"><span class="params">config</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> token = <span class="variable language_">localStorage</span>.<span class="title function_">getItem</span>(<span class="string">&#x27;token&#x27;</span>)</span><br><span class="line">  config.<span class="property">headers</span>.<span class="property">common</span>[<span class="string">&#x27;Authorization&#x27;</span>] = <span class="string">&#x27;Bearer &#x27;</span> + token</span><br><span class="line">  <span class="keyword">return</span> config</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>跨域时，另一种做法是把token放在POST请求的数据体里。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://tsukimi628.github.io">tsukimi</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://tsukimi628.github.io/2022/10/12/%E9%89%B4%E6%9D%83%E6%9C%BA%E5%88%B6-%E2%80%94-JWT%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">https://tsukimi628.github.io/2022/10/12/%E9%89%B4%E6%9D%83%E6%9C%BA%E5%88%B6-%E2%80%94-JWT%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://tsukimi628.github.io" target="_blank">Tsukimi</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/jwt/">jwt</a></div><div class="post_share"><div class="social-share" data-image="https://img-blog.csdnimg.cn/e7ede3920157411e86112ca7cd455679.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/09/24/type-VS-interface-%E5%8C%BA%E5%88%AB/"><img class="next-cover" src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fs5.51cto.com%2Fimages%2Fblog%2F202101%2F29%2F396b09a84b7d2e521bae62bf17990b90.png%3Fx-oss-process%3Dimage%2Fwatermark%2Csize_16%2Ctext_QDUxQ1RP5Y2a5a6i%2Ccolor_FFFFFF%2Ct_100%2Cg_se%2Cx_10%2Cy_10%2Cshadow_90%2Ctype_ZmFuZ3poZW5naGVpdGk%3D&amp;refer=http%3A%2F%2Fs5.51cto.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1666629566&amp;t=b050587959407ead2ec56f0267bfccf4" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">type VS interface 区别</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/fav.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">tsukimi</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">20</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">29</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#JWT-JSON-Web-Token"><span class="toc-number">1.</span> <span class="toc-text">JWT(JSON Web Token)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%A8%E5%9F%9F%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">1.1.</span> <span class="toc-text">跨域身份验证的问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JWT%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">JWT的原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JWT%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-number">3.</span> <span class="toc-text">JWT的组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BD%BF%E7%94%A8JWT"><span class="toc-number">4.</span> <span class="toc-text">客户端使用JWT</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/10/12/%E9%89%B4%E6%9D%83%E6%9C%BA%E5%88%B6-%E2%80%94-JWT%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="鉴权机制 — JWT学习笔记"><img src="https://img-blog.csdnimg.cn/e7ede3920157411e86112ca7cd455679.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="鉴权机制 — JWT学习笔记"/></a><div class="content"><a class="title" href="/2022/10/12/%E9%89%B4%E6%9D%83%E6%9C%BA%E5%88%B6-%E2%80%94-JWT%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="鉴权机制 — JWT学习笔记">鉴权机制 — JWT学习笔记</a><time datetime="2022-10-12T07:33:13.000Z" title="发表于 2022-10-12 15:33:13">2022-10-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/24/type-VS-interface-%E5%8C%BA%E5%88%AB/" title="type VS interface 区别"><img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fs5.51cto.com%2Fimages%2Fblog%2F202101%2F29%2F396b09a84b7d2e521bae62bf17990b90.png%3Fx-oss-process%3Dimage%2Fwatermark%2Csize_16%2Ctext_QDUxQ1RP5Y2a5a6i%2Ccolor_FFFFFF%2Ct_100%2Cg_se%2Cx_10%2Cy_10%2Cshadow_90%2Ctype_ZmFuZ3poZW5naGVpdGk%3D&amp;refer=http%3A%2F%2Fs5.51cto.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1666629566&amp;t=b050587959407ead2ec56f0267bfccf4" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="type VS interface 区别"/></a><div class="content"><a class="title" href="/2022/09/24/type-VS-interface-%E5%8C%BA%E5%88%AB/" title="type VS interface 区别">type VS interface 区别</a><time datetime="2022-09-24T14:43:52.000Z" title="发表于 2022-09-24 22:43:52">2022-09-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/10/Webpack%E9%AB%98%E7%BA%A7%20%E2%80%94%20CodeSplit%20&amp;%20NetworkCache/" title="Webpack高级 — CodeSplit &amp; Network Cache"><img src="https://img0.baidu.com/it/u=2807815437,1978693260&amp;fm=253&amp;fmt=auto&amp;app=138&amp;f=PNG?w=516&amp;h=500" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Webpack高级 — CodeSplit &amp; Network Cache"/></a><div class="content"><a class="title" href="/2022/09/10/Webpack%E9%AB%98%E7%BA%A7%20%E2%80%94%20CodeSplit%20&amp;%20NetworkCache/" title="Webpack高级 — CodeSplit &amp; Network Cache">Webpack高级 — CodeSplit &amp; Network Cache</a><time datetime="2022-09-10T09:03:54.000Z" title="发表于 2022-09-10 17:03:54">2022-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/01/TypeScript%E5%9C%A8Vue3-CompositionAPI%E7%BB%84%E4%BB%B6%E4%B8%AD%E7%9A%84%E8%BF%90%E7%94%A8/" title="TypeScript在Vue3 CompositionAPI组件中的运用"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="TypeScript在Vue3 CompositionAPI组件中的运用"/></a><div class="content"><a class="title" href="/2022/09/01/TypeScript%E5%9C%A8Vue3-CompositionAPI%E7%BB%84%E4%BB%B6%E4%B8%AD%E7%9A%84%E8%BF%90%E7%94%A8/" title="TypeScript在Vue3 CompositionAPI组件中的运用">TypeScript在Vue3 CompositionAPI组件中的运用</a><time datetime="2022-09-01T04:06:43.000Z" title="发表于 2022-09-01 12:06:43">2022-09-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/31/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/" title="小程序开发笔记"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="小程序开发笔记"/></a><div class="content"><a class="title" href="/2022/08/31/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/" title="小程序开发笔记">小程序开发笔记</a><time datetime="2022-08-31T04:57:25.000Z" title="发表于 2022-08-31 12:57:25">2022-08-31</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2022 By tsukimi</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="255,255,255" opacity="0.97" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":170,"height":390,"hOffset":0,"vOffset":-60},"mobile":{"show":true},"react":{"opacity":1},"log":false});</script></body></html>
