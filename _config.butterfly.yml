@@ -1,0 +1,49 @@
+preload: true
+
+menu:
+  首页: / || fas fa-home
+  时间轴: /archives/ || fas fa-archive
+  标籤: /tags/ || fas fa-tags
+  分类: /categories/ || fas fa-folder-open
+  清单||fa fa-heartbeat:
+    音乐: /music/ || fas fa-music
+    照片: /Gallery/ || fas fa-images
+    电影: /movies/ || fas fa-video
+  友链: /link/ || fas fa-link
+  关于: /about/ || fas fa-heart
+
+# #abc2d1 #c2d4df #c8dfed #aacee5
+#background: "linear-gradient(-225deg, #3d91c7 0%, #dcf1f7 25%, #b9dee2 40%, #a3f6ff 78%, #5ca2cf 100%)"
+#background: "linear-gradient(-225deg, #fff 0%, #d3e5f1 15%, #dcf1f7 35%, #b9dee2 50%, #cceff3 78%, #bcd5e5 100%)"
+#background: "linear-gradient(-225deg, #fff 0%, #bbd6e7 10%, #d3e5f1 20%, #dcf1f7 35%, #b9dee2 50%, #cceaed 78%, #bcd5e5 100%)"
+background: "linear-gradient(-225deg, #fff 0%, #abc2d1 15%, #c2d4df 30%, #c8dfed 50%, #aacee5 70%, #9bcbe9 85%, #7ebbe1 100%)"
+
+canvas_nest:
+  enable: true
+  color: '255,255,255' #color of lines, default: '0,0,0'; RGB values: (R,G,B).(note: use ',' to separate.)
+  opacity: 0.97 # the opacity of line (0~1), default: 0.5.
+  zIndex: -1 # z-index property of the background, default: -1.
+  count: 99 # the number of lines, default: 99.
+  mobile: false # false 手机端不显示 true 手机端显示
+
+footer:
+  owner:
+    enable: true
+    since: 2018
+  copyright: false
+
+avatar:
+  #img: /img/tsukimi.jpg
+  img: /img/fav.jpg
+favicon: /img/tsukimi.jpg
+
+activate-power-mode:
+  enable: true
+  colorful: true
+  shake: true
+
+busuanzi:
+  site_uv: true
+  site_pv: true
+  page_pv: true
+
